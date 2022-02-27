@@ -71,4 +71,43 @@ export const homeCareServices = [
     },
 ]
 
+let arrayofHome
+
+
+homeCareServices.forEach(service => {
+    const newHomeService = {
+        homeCareName: service.name,
+        id: service.id,
+        patients: [patients.map((patient) => {
+            return ({
+                if(patient.homeCareId === service.id){
+                    patient_id: patient.id,
+                    name: patient.name,
+                    age: patient.age,
+                    diagnosis?: patient.diagnosis,
+                    price: patient.price,
+                    visits: patient.visits
+                }
+            })
+        })]
+    }
+
+
+})
+
+patients.map((paciente) =>{
+    if 
+})
+
+{
+    "age": 45,
+    "diagnosis": "Whatever",
+    "homeCareId": "f57e28bd-8247-4ca1-bdf7-d5d346455b0b",
+    "homeCareName": "Particular",
+    "id": "41223d41-67b5-4a2b-8c64-57390360c238",
+    "name": "Teste",
+    "price": "50",
+    "visits": 0,
+  }
+
 
