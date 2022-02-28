@@ -4,13 +4,44 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from '../screens/Home';
 import { MaterialIcons } from '@expo/vector-icons'
 import { Register } from "../screens/Register";
-import { SelectHomeCare } from "../screens/SelectHomeCare";
 import { Patients } from "../screens/Patients";
+import { createStackNavigator } from "@react-navigation/stack";
+import { PatientScreen } from "../screens/PatientScreen";
+import { RootStackParamList } from "./types";
+
+
+
+
 
 const {Navigator, Screen} = createBottomTabNavigator();
+const Stack = createStackNavigator<RootStackParamList>()
 
 
 export function AppRoutes(){
+    return (
+        <Stack.Navigator>
+            <Stack.Group
+            screenOptions={{headerShown:false}}
+            >
+                <Stack.Screen 
+                name="Routes" 
+                component={Routes}            
+                />
+            </Stack.Group>
+            <Stack.Group
+            screenOptions={{headerShown:false}}
+            >
+                <Stack.Screen
+                name="Patient"
+                component={PatientScreen}
+                
+                />
+            </Stack.Group>
+        </Stack.Navigator>
+    )
+
+}
+export function Routes(){
     const theme = useTheme()
     return (
         <Navigator

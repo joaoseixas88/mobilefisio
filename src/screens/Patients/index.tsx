@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Header } from '../../components/Header'
 import { PatientsCard } from '../../components/PatientsCard'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Container } from './styles'
+import { Container, Content } from './styles'
 import { FlatList } from 'react-native-gesture-handler';
+import { ProfileScreenNavigationProp } from '../../routes/types';
 
 
 
@@ -20,7 +21,7 @@ interface Patients{
 const DataKey = '@mobilefisio:patients'
 
 interface Props{
-    navigation: any
+    navigation: ProfileScreenNavigationProp
 }
 
 export function Patients({navigation}: Props){
@@ -69,6 +70,11 @@ export function Patients({navigation}: Props){
         data={patients}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => (
+            <Content
+            onPress={() => navigation.navigate('Patient', {
+                patient:{...item}
+            })}
+            >
             <PatientsCard 
             id={item.id}
             addNewVisits={addVisit}
@@ -77,6 +83,7 @@ export function Patients({navigation}: Props){
             diagnosis={item.diagnosis}
             visits={item.visits}
             />
+            </Content>
         )}       
         
         />
