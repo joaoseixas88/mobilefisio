@@ -61,12 +61,12 @@ export function PatientsCard({patient,name, age, diagnosis, visits, id, addNewVi
                 {diagnosis && <Diagnosis>Diagnostico: {diagnosis}</Diagnosis>}
                 <Visits>Atendimentos: {visits}</Visits>
                 <ButtonInfoContent>
-                <Button 
-                onPress={() => navigation.navigate('Patient', {
-                    patient:{...patient}
-                })}>
-                    <TextButton>Informações</TextButton>
-                </Button>
+                    <Button 
+                    onPress={() => navigation.navigate('Patient', {
+                        patient:{...patient}
+                    })}>
+                        <TextButton>Informações</TextButton>
+                    </Button>
                 </ButtonInfoContent>
             </TextContent>
             <ButtonContent>

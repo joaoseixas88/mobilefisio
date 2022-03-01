@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, } from 'react'
+import React, {  useEffect, useState, } from 'react'
 import { FlatList } from 'react-native'
 
 import { Header } from '../../components/Header'
@@ -7,8 +7,7 @@ import { ActivityIndicator } from 'react-native'
 import { 
     Container,    
     HomeCareName,
-    Content,
-    PatientsContent,
+    Content,    
     Text,
     TotalContent,
     Total,
@@ -17,22 +16,14 @@ import {
     
     
 } from './styles'
+import { Patient } from '../../../utils/types';
 
-interface Patients{
-    id: string;
-    homeCareId: string;
-    name: string
-    age: string;
-    diagnosis: string;
-    price: string;
-    homeCareName: string;
-    visits: number;
-}
+
 
 interface HomeCareProps{
     id: string;
     name: string;
-    patients: Patients[]
+    patients: Patient[]
     
 }
 
@@ -52,7 +43,7 @@ const homeServicesKey = '@mobilefisio:homeservices'
 export function Home({navigation}: Props){
 
     const [isLoading, setIsLoading] = useState(true)
-    const [patients, setPatients] = useState<Patients[]>([])
+    const [patients, setPatients] = useState<Patient[]>([])
     const [homeCareServices, setHomeCareServices] = useState<HomeCareProps[]>([])
 
     async function loadPatients(){
@@ -82,7 +73,7 @@ export function Home({navigation}: Props){
 
         if (formatedHomeServices !==[]){
             const oldServices = [...formatedHomeServices]
-            oldPatients.forEach((patient: Patients) => {
+            oldPatients.forEach((patient: Patient) => {
                 oldServices.forEach((service) => {
                     if (service.id === patient.homeCareId){
                         service.patients.push(patient)
@@ -129,15 +120,15 @@ export function Home({navigation}: Props){
                 renderItem={({item}) =>
                 <FlatPatientsContent>                    
                     <Text>Paciente: {item.name}</Text>                        
-                    <Text>Realizado {item.visits} Visitas</Text>
-                    <Text>Produtividade: R$ {Number(item.visits) * Number(item.price)}</Text>
+                    <Text>Realizado {item.assistences.length} Visitas</Text>
+                    <Text>Produtividade: R$ {Number(item.assistences.length) * Number(item.price)}</Text>
                 </FlatPatientsContent>
                 
             } 
             />
                 
                 <Total>Total: R$ {item.patients.reduce((acc, patient) => {
-                    acc += (Number(patient.price) * Number(patient.visits))
+                    acc += (Number(patient.price) * Number(patient.assistences.length))
                     return acc
                 }, 0)}</Total>
                 
@@ -149,7 +140,7 @@ export function Home({navigation}: Props){
         <TotalContent>
             <Total>Total da produtividade: R$ {homeCareServices.reduce((acc, homeService) => {
                     homeService.patients.forEach((patient) =>{
-                        acc += (Number(patient.price) * Number(patient.visits) )
+                        acc += (Number(patient.price) * Number(patient.assistences.length) )
                     })
                     return acc
                 }, 0)} 

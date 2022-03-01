@@ -2,8 +2,8 @@ import { RectButton } from 'react-native-gesture-handler'
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
-    
-    
+    justify-content: center;
+    flex: 1
 `
 export const Separator = styled.View`
     height: 1px;

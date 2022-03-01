@@ -1,10 +1,16 @@
 {
   "expo": {
-    "name": "mobilefisio",
-    "slug": "mobilefisio",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+   "name": "mobilefisio",
+   "icon": "./src/global/assets/icon.png",
+   "version": "1.0.0",
+   "slug": "fisioapp",
+   "ios": {
+     "bundleIdentifier": "com.sxdev.mobilefisio",
+     "buildNumber": "1.0.0"
+   },
+   "android": {
+     "package": "com.sxdev.mobilefisio",
+     "versionCode": 1
+   }
   }
 }

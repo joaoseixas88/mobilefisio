@@ -47,7 +47,7 @@ export function Patients({navigation}: Props){
         if(oldPatients !== []){
             oldPatients.map((patient: Patient) => {
                 if(id === patient.id){
-                    patient.visits = patient.visits + 1
+                    // patient.visits = patient.visits + 1
 
                     const date = new Date
                     const dateFormatted = Intl.DateTimeFormat('pt-BR',{
@@ -97,7 +97,7 @@ export function Patients({navigation}: Props){
                 age={item.age}
                 name={item.name}
                 diagnosis={item.diagnosis}
-                visits={item.visits}
+                visits={item.assistences.length}
                 navigation={navigation}
                 patient={item}
                 />

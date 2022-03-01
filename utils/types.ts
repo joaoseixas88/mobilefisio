@@ -4,7 +4,7 @@ export interface Patient{
     age: string;
     diagnosis: string;
     price: string;
-    homeCareName: string;
-    visits: number;
+    homeCareId: string;
+    homeCareName: string;    
     assistences: string[]
 }

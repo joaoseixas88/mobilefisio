@@ -84,8 +84,7 @@ export function Register({...rest}: Props){
             diagnosis: form.diagnosis,
             price: price,
             homeCareName: homeCareService.name,
-            homeCareId: homeCareService.id,            
-            visits: 0,
+            homeCareId: homeCareService.id, 
             assistences: [],
 
         }      
