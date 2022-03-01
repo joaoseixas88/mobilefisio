@@ -1,28 +1,20 @@
 import { StackNavigationProp  } from '@react-navigation/stack'
 import type { RouteProp } from '@react-navigation/native';
+import { Patient } from '../../utils/types';
 
 
 export type RootStackParamList = {
     Routes: undefined;
-    Patient: {patient: Patients};
+    Patient: {patient: Patient};
   };
 
-export type ProfileScreenNavigationProp = StackNavigationProp<
+export type NavigationProps = StackNavigationProp<
 RootStackParamList,
   'Patient'
 >;
 
 
 
-export type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Patient'>;
+export type RoutesProps = RouteProp<RootStackParamList, 'Patient'>;
 
 
-interface Patients{
-    id: string;
-    name: string
-    age: string;
-    diagnosis: string;
-    price: string;
-    homeCareName: string;
-    visits: number;
-}

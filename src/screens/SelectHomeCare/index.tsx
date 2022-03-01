@@ -48,10 +48,19 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
         setSelectHome(selectedHome)
         
     }
+
+    
     
     const [homeCareServices, setHomeCareServices] = useState<HomeCareProps[]>([])
     const [addNewHomeCareModal, setAddNewHomeCareModal] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+
+    async function handleDeleteHomeCare(id: string){
+        const services = [...homeCareServices]
+        const newHomeCareServices = services.filter((item) => item.id !== id)
+        setHomeCareServices(newHomeCareServices)
+        await AsyncStorage.setItem(DataKey,JSON.stringify(newHomeCareServices))
+    }
        
     function handleOpenNewHomeCareModal(){
         setAddNewHomeCareModal(true)
@@ -102,8 +111,22 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
         renderItem={({item}) => 
             <Content
             isActive={item.id === selectedHome.id}            
+            onLongPress={() => Alert.alert(
+                "Remover",
+                "Deseja remover o serviço de HomeCare?",[
+                    {
+                        text: "Cancelar",
+                        onPress: () => console.log("Cancelar")
+                    },
+                    {
+                        text: "Confirmar",
+                        onPress: () => handleDeleteHomeCare(item.id)
+                    }
+                ]
+            )}
             >
                 <SelectHomeButton 
+                
                 onPress={() => (handleSelectHome(item), setPrice(item.price) )}
                 homeCareName={item.name}                
                

@@ -14,7 +14,7 @@ export const ServicesContent = styled.View`
    flex: 1;
 
 `
-export const Content = styled.View<Selected>`
+export const Content = styled.TouchableOpacity<Selected>`
     
     background-color: ${({ isActive, theme }) => isActive ? theme.colors.sucess_light : theme.colors.shape};
     

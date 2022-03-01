@@ -14,8 +14,13 @@ import {
      Content,
      ButtonContent,
      TextContent,
-     Button
+     Button,
+     TextButton,
+     ButtonInfoContent
      } from './styles'
+import { Alert } from 'react-native';
+import { NavigationProps } from '../../routes/types';
+import { Patient } from '../../../utils/types';
 
 interface Props{
     name: string;
@@ -24,9 +29,29 @@ interface Props{
     visits: number;
     id: string;
     addNewVisits: (id: string) => void;
+    navigation: NavigationProps;
+    patient: Patient
 }
 
-export function PatientsCard({name, age, diagnosis, visits, id, addNewVisits}: Props){
+export function PatientsCard({patient,name, age, diagnosis, visits, id, addNewVisits, navigation}: Props){
+
+    function handleAddNewVisits(){
+        Alert.alert(
+            "Confirmar atendimento.",
+            "Você gostaria de confirmar o atendimento?",
+            [
+                {
+                    text: "Cancelar",
+                    onPress: () => {return}
+                },
+                {
+                    text: "Confirmar",
+                    onPress: () => {addNewVisits(id)}
+                }
+            ]
+        )
+    }
+
     return(
     <Container>
         <Content>
@@ -35,10 +60,18 @@ export function PatientsCard({name, age, diagnosis, visits, id, addNewVisits}: P
                 <Age>Idade: {age}</Age>
                 {diagnosis && <Diagnosis>Diagnostico: {diagnosis}</Diagnosis>}
                 <Visits>Atendimentos: {visits}</Visits>
+                <ButtonInfoContent>
+                <Button 
+                onPress={() => navigation.navigate('Patient', {
+                    patient:{...patient}
+                })}>
+                    <TextButton>Informações</TextButton>
+                </Button>
+                </ButtonInfoContent>
             </TextContent>
             <ButtonContent>
                 <Button
-                onPress={() => addNewVisits(id)}
+                onPress={handleAddNewVisits}
                 >
                     <MaterialCommunityIcons name="plus-circle-outline" size={24} color="black" />
                 </Button>

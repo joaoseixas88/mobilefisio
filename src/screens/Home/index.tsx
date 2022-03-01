@@ -4,9 +4,6 @@ import { FlatList } from 'react-native'
 import { Header } from '../../components/Header'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from 'react-native'
-import { useFocusEffect } from '@react-navigation/native'
-
-
 import { 
     Container,    
     HomeCareName,
@@ -20,7 +17,6 @@ import {
     
     
 } from './styles'
-import { set } from 'react-hook-form';
 
 interface Patients{
     id: string;
@@ -102,13 +98,10 @@ export function Home({navigation}: Props){
 
     }
        
-    // useFocusEffect(useCallback(() => {
-    //     loadPatients()
-    //     loadServices()
-    // },[]))
-    
+  
     useEffect(() => {
         navigation.addListener('focus', () =>{
+            setIsLoading(true)
             loadPatients()
             loadServices()
         })

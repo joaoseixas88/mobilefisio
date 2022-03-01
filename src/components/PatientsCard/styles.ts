@@ -12,14 +12,14 @@ export const Container = styled.View`
 `
 
 export const Content = styled.View`
-    padding: 10px;
-    background-color: ${({ theme }) => theme.colors.sucess_light};
+    padding: 10px;    
     width: 90%;
     padding: 10px;
-    margin: 10px;
+    background-color: ${({ theme }) => theme.colors.sucess_light};
     border-radius: 5px;
     flex-direction: row;
     justify-content: space-between;
+    margin: 10px;
 `
 
 export const Button = styled(RectButton)`
@@ -50,4 +50,18 @@ export const Diagnosis = styled.Text`
 export const Visits = styled.Text`
     color: ${({ theme }) => theme.colors.title };
     font-size: ${RFValue(18)}px;
+`
+export const TextButton = styled.Text`
+    color: ${({ theme }) => theme.colors.text_dark};;
+`
+export const ButtonInfoContent = styled.View`
+    width: 100%;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    margin: 5px;
+    align-self: flex-start;
+    margin-left: 10px;
+    background-color: ${({ theme }) => theme.colors.sucess_light }
 `

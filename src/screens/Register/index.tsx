@@ -84,8 +84,9 @@ export function Register({...rest}: Props){
             diagnosis: form.diagnosis,
             price: price,
             homeCareName: homeCareService.name,
-            homeCareId: homeCareService.id,
-            visits: 0
+            homeCareId: homeCareService.id,            
+            visits: 0,
+            assistences: [],
 
         }      
 
@@ -132,7 +133,8 @@ export function Register({...rest}: Props){
                 placeholder='Idade'
                 name="age"
                 error={errors.age && errors.age.message}
-                control={control}                
+                control={control} 
+                keyboardType='number-pad'               
                 />
                 <InputForm 
                 placeholder='Diagnóstico'
@@ -144,7 +146,7 @@ export function Register({...rest}: Props){
                 <Input 
                 placeholder='Preço'
                 value={String(price)}
-                
+                keyboardType='number-pad'
                 onChangeText={setPrice}
                 />
                
