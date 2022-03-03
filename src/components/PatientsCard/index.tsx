@@ -1,10 +1,5 @@
 import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-
-
-
-
 import {
      Container,
      Name,
@@ -57,15 +52,15 @@ export function PatientsCard({patient,name, age, diagnosis, visits, id, addNewVi
         <Content>
             <TextContent>
                 <Name>Nome: {name}</Name>
-                <Age>Idade: {age}</Age>
-                {diagnosis && <Diagnosis>Diagnostico: {diagnosis}</Diagnosis>}
-                <Visits>Atendimentos: {visits}</Visits>
+                {/* <Age>Idade: {age}</Age> */}
+                {/* {diagnosis && <Diagnosis>Diagnostico: {diagnosis}</Diagnosis>} */}
+                {/* <Visits>Atendimentos: {visits}</Visits> */}
                 <ButtonInfoContent>
                     <Button 
                     onPress={() => navigation.navigate('Patient', {
                         patient:{...patient}
                     })}>
-                        <TextButton>Informações</TextButton>
+                        <TextButton>Detalhes</TextButton>
                     </Button>
                 </ButtonInfoContent>
             </TextContent>

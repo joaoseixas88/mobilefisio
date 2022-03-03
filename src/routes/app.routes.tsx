@@ -8,6 +8,7 @@ import { Patients } from "../screens/Patients";
 import { createStackNavigator } from "@react-navigation/stack";
 import { PatientScreen } from "../screens/PatientScreen";
 import { RootStackParamList } from "./types";
+import { AllPatients } from "../screens/AllPatients";
 
 
 
@@ -83,7 +84,7 @@ export function Routes(){
             />
             <Screen
             name="Pacientes"
-            component={Patients}
+            component={AllPatients}
             options={{
                 tabBarIcon: (({ size, color }) =>
                     <MaterialIcons 

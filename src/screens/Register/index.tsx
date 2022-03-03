@@ -20,7 +20,7 @@ import { Container,
 import { Header } from '../../components/Header';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import { Button } from '../../components/Button';
-import { CommomText } from '../../components/CommonText';
+
 
 const schema = Yup.object().shape({
     name: Yup.string().typeError('Somente texto').required('Nome é obrigatório'),
@@ -84,7 +84,8 @@ export function Register({...rest}: Props){
             diagnosis: form.diagnosis,
             price: price,
             homeCareName: homeCareService.name,
-            homeCareId: homeCareService.id, 
+            homeCareId: homeCareService.id,
+            dates: [], 
             assistences: [],
 
         }      

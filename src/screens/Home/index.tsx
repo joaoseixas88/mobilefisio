@@ -1,4 +1,4 @@
-import React, {  useEffect, useState, } from 'react'
+import React, {  useCallback, useEffect, useState, } from 'react'
 import { FlatList } from 'react-native'
 
 import { Header } from '../../components/Header'
@@ -17,6 +17,7 @@ import {
     
 } from './styles'
 import { Patient } from '../../../utils/types';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -43,7 +44,6 @@ const homeServicesKey = '@mobilefisio:homeservices'
 export function Home({navigation}: Props){
 
     const [isLoading, setIsLoading] = useState(true)
-    const [patients, setPatients] = useState<Patient[]>([])
     const [homeCareServices, setHomeCareServices] = useState<HomeCareProps[]>([])
 
     async function loadPatients(){
@@ -51,7 +51,6 @@ export function Home({navigation}: Props){
 
     }
 
-   
 
     async function loadServices(){
         
@@ -89,14 +88,19 @@ export function Home({navigation}: Props){
 
     }
        
+    useFocusEffect((useCallback(() => {
+        setIsLoading(true)
+        loadPatients()
+        loadServices()
+    },[])))
   
-    useEffect(() => {
-        navigation.addListener('focus', () =>{
-            setIsLoading(true)
-            loadPatients()
-            loadServices()
-        })
-    },[navigation])
+    // useEffect(() => {
+    //     navigation.addListener('focus', () =>{
+    //         setIsLoading(true)
+    //         loadPatients()
+    //         loadServices()
+    //     })
+    // },[navigation])
         
     
 

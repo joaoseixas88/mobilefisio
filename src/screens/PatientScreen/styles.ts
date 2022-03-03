@@ -17,6 +17,7 @@ export const PatientContent = styled.View`
    background-color:${({ theme }) => theme.colors.sucess_light};
    padding: 15px;
    border-radius: 10px;
+   flex: 1;
 `
 
 

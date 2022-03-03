@@ -86,6 +86,7 @@ export function PatientScreen({ route, navigation }: Props){
             <Diagnosis>Diagnóstico: {patient.diagnosis}</Diagnosis>
             <Price>Valor do atendimento: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(patient.price))}
             </Price>
+            <Age>HomeCare: {patient.homeCareName}</Age>
             <Visits>Atendimentos realizados: {patient.assistences.length}</Visits>
             <Title>Datas dos atendimentos:</Title>
             <FlatList 

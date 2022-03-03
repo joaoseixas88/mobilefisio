@@ -5,6 +5,13 @@ export interface Patient{
     diagnosis: string;
     price: string;
     homeCareId: string;
-    homeCareName: string;    
+    homeCareName: string;
+    dates: Date[];    
     assistences: string[]
+}
+
+export interface HomeCareProps{
+    id: string;
+    name: string;
+    patients: Patient[]
 }

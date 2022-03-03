@@ -48,7 +48,7 @@ export const SelectHomeButton = styled.View`
     padding: 15px;
     margin-top: 18px;
     border-radius: 10px;
-    border-width: 0.5px;
+    border-width: 1px;
     background-color: ${({theme}) => theme.colors.sucess_light};
 `
  
