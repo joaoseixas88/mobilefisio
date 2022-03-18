@@ -4,12 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from '../screens/Home';
 import { MaterialIcons } from '@expo/vector-icons'
 import { Register } from "../screens/Register";
-import { Patients } from "../screens/Patients";
+import { Productivity } from "../screens/Productivity";
 import { createStackNavigator } from "@react-navigation/stack";
 import { PatientScreen } from "../screens/PatientScreen";
 import { RootStackParamList } from "./types";
 import { AllPatients } from "../screens/AllPatients";
-
 
 
 
@@ -56,8 +55,8 @@ export function Routes(){
         >
 
             <Screen
-            name="Home"
-            component={Home}
+            name="Produtividade"
+            component={Productivity}
             options={{
                 tabBarIcon: (({ size, color }) =>
                     <MaterialIcons 

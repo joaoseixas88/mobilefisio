@@ -13,11 +13,6 @@ export const Separator = styled.View`
     /* background-color: ${({ theme }) => theme.colors.text}; */
 
 `
-export const PatientSeparator = styled.View`
-    height: 1px;
-    width: 100%;
-    
 
-`
 
 export const InteranalContent = styled.View``

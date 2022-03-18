@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid'
-
+import { PatientProps } from '../../../utils/types'
 
 import { 
     Container,
@@ -17,6 +17,8 @@ import {
  } from './styles'
 import { Button } from '../../components/Button';
 import { Alert } from 'react-native';
+import { servicesKey  } from '../../../utils/keys';
+import { useServices } from '../../hooks/servicesContext';
 
 
 
@@ -31,7 +33,7 @@ interface HomeCareProps{
     id: string;
     name: string;
     price: string;
-    
+    patients: PatientProps[]
 }
 
 interface Props{
@@ -44,12 +46,13 @@ interface FormData{
     [name: string]: any ;     
 }
 
-const DataKey = '@mobilefisio:homeservices'
+
 
 export function AddNewHomeCare({closeModal, setHomeCareServices, homeCareServices}: Props){
 
 
-     
+    const { registerNewService } = useServices() 
+
     const { 
         control, 
         handleSubmit, 
@@ -60,29 +63,17 @@ export function AddNewHomeCare({closeModal, setHomeCareServices, homeCareService
    
 
     async function handleRegisterHomeCare(form: FormData){
+
         const newHomeService = {
             id: String(uuid.v4()),
             name: form.name,
-            price: form.price
+            price: form.price,
+            patients: []
         }
         
+        registerNewService(newHomeService)
         
-        try {   
-            const oldData = homeCareServices
-            // const data = await AsyncStorage.getItem(DataKey)
-            // const currentData = data ? JSON.parse(data) : [] 
-            
-            const formatedData = [
-                ...oldData,
-                newHomeService
-            ]
-
-            await AsyncStorage.setItem(DataKey, JSON.stringify(formatedData))
-            setHomeCareServices(formatedData)
-        } catch (error) {
-            Alert.alert('Algo deu errado.')
-        }
-
+                
         closeModal()
         
         

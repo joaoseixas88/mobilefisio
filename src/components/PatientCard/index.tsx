@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from '../Button'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
     Container,
@@ -13,18 +12,21 @@ import {
     ButtonContent,
  } from './styles'
 import { Alert } from 'react-native';
-import {  Patient } from '../../../utils/types';
+import {  PatientProps } from '../../../utils/types';
 import { NavigationProps } from '../../routes/types';
+import { useServices } from '../../hooks/servicesContext';
 
 interface Props {
     navigation: NavigationProps
-    patient: Patient
-    AddNewVisit: (id: string) => void
+    patient: PatientProps   
+    serviceId: string
 }
 
 
-export function PatientCard({navigation, patient, AddNewVisit }: Props){
+export function PatientCard({navigation, patient, serviceId }: Props){
 
+
+    const { addNewVisit } = useServices()
 
     function handleAddNewVisits(id:string){
         Alert.alert(
@@ -37,7 +39,7 @@ export function PatientCard({navigation, patient, AddNewVisit }: Props){
                 },
                 {
                     text: "Confirmar",
-                    onPress: () => {AddNewVisit(id)}
+                    onPress: () => {addNewVisit(serviceId, id)}
                 }
             ]
         )
@@ -52,7 +54,7 @@ export function PatientCard({navigation, patient, AddNewVisit }: Props){
             <PatientContent>
                 <Visits>Visitas: {patient.assistences.length}</Visits>
                 <DetailsButton
-                    onPress={() => navigation.navigate('Patient', {patient:{...patient}})}
+                    onPress={() => navigation.navigate('Patient', {patient:JSON.stringify(patient), serviceId: serviceId})}
                     >
                     <Details>Detalhes</Details>
                 </DetailsButton>

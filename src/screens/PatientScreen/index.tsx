@@ -22,6 +22,7 @@ import {
 import { Button } from '../../components/Button';
 import { NavigationProps, RoutesProps } from '../../routes/types';
 import { Alert, FlatList } from 'react-native';
+import { useServices } from '../../hooks/servicesContext';
 
 
 interface Props {
@@ -33,28 +34,12 @@ interface Props {
 }
 
 
-
-
-
-const DataKey = '@mobilefisio:patients'
-
 export function PatientScreen({ route, navigation }: Props){
 
-    const { patient } = route.params
+    const { patient, serviceId } = route.params
+    const formattedPatient = JSON.parse(patient)
 
-    async function handleDeletePatient(id: string){
-       const response = await AsyncStorage.getItem(DataKey)
-       const patients = response ? JSON.parse(response) : []
-        
-       const currentPatients = [...patients]
-
-       const newPatients = currentPatients.filter((item) => id !== item.id)
-
-       await AsyncStorage.setItem(DataKey, JSON.stringify(newPatients))
-       navigation.navigate('Routes')
-       Alert.alert('Paciente removido com sucesso')
-
-    }
+    const { deletePatient } = useServices()
 
     function handleDelete(){
         Alert.alert(
@@ -67,30 +52,29 @@ export function PatientScreen({ route, navigation }: Props){
                 },
                 {
                     text: "Confirmar",
-                    onPress: () => handleDeletePatient(patient.id)
+                    onPress: () => (deletePatient(serviceId, formattedPatient.id), navigation.goBack())
                 }
             ]
         )
+        
     }
 
-    
     
     return(
     <Container>
         <Header 
-        title={patient.name}
+        title={formattedPatient.name}
         />
         <Content>
         <PatientContent>            
-            <Age>Idade: {patient.age}</Age>
-            <Diagnosis>Diagnóstico: {patient.diagnosis}</Diagnosis>
-            <Price>Valor do atendimento: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(patient.price))}
-            </Price>
-            <Age>HomeCare: {patient.homeCareName}</Age>
-            <Visits>Atendimentos realizados: {patient.assistences.length}</Visits>
+            <Age>Idade: {formattedPatient.age}</Age>
+            <Diagnosis>Diagnóstico: {formattedPatient.diagnosis}</Diagnosis>
+            <Price>Valor do atendimento: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(formattedPatient.price))}
+            </Price>            
+            <Visits>Atendimentos realizados: {formattedPatient.assistences.length}</Visits>
             <Title>Datas dos atendimentos:</Title>
             <FlatList 
-            data={patient.assistences}
+            data={formattedPatient.assistences}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => (
                 <DatesContainer>                    

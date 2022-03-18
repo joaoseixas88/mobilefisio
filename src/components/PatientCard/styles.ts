@@ -6,7 +6,7 @@ export const Container = styled.View`
     padding: 10px;
     background-color: ${({ theme }) => theme.colors.sucess_light};
     margin: 10px;
-    
+    border-radius: 5px;
 `
 export const Header = styled.View`
     align-items: center;

@@ -18,7 +18,9 @@ import {
     Separator
 
 } from './styles'
-import { CommomText } from '../../components/CommonText'
+import { PatientProps } from '../../../utils/types'
+import { servicesKey } from '../../../utils/keys'
+import { useServices } from '../../hooks/servicesContext'
 
 
 
@@ -29,10 +31,10 @@ interface HomeCareProps{
     id: string;
     name: string;
     price: string;
-    
+    patients: PatientProps[]
 }
 
-const DataKey = '@mobilefisio:homeservices'
+
 
 interface Props extends RectButtonProps{
     
@@ -44,23 +46,19 @@ interface Props extends RectButtonProps{
 
 export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSelectHome, ...rest}: Props){
 
+
+    const { services, deleteService } = useServices()
+
     function handleSelectHome(selectedHome: HomeCareProps ){
         setSelectHome(selectedHome)
         
-    }
-
-    
+    }    
     
     const [homeCareServices, setHomeCareServices] = useState<HomeCareProps[]>([])
-    const [addNewHomeCareModal, setAddNewHomeCareModal] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
 
-    async function handleDeleteHomeCare(id: string){
-        const services = [...homeCareServices]
-        const newHomeCareServices = services.filter((item) => item.id !== id)
-        setHomeCareServices(newHomeCareServices)
-        await AsyncStorage.setItem(DataKey,JSON.stringify(newHomeCareServices))
-    }
+    const [addNewHomeCareModal, setAddNewHomeCareModal] = useState(false)
+
+    
        
     function handleOpenNewHomeCareModal(){
         setAddNewHomeCareModal(true)
@@ -71,22 +69,7 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
 
     
 
-    async function getHomeCareServices(){
-        try {
-           const response = await AsyncStorage.getItem(DataKey)           
-           response != null ? setHomeCareServices(JSON.parse(response)) : null
-           setIsLoading(false)
-            
-           
-        } catch (error) {
-            Alert.alert('Algo deu errado')
-        }
-    }
-
-    useEffect(() => {
-        getHomeCareServices()        
-        
-    },[])
+    
     
     return(
     <GestureHandlerRootView style={{flex: 1}}>
@@ -101,12 +84,11 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
             </AddButonView>
         </Header>
         <ServicesContent>
-        {isLoading ? <ActivityIndicator/> :
-        <ServicesContent>
+        
         
         <FlatList 
         ItemSeparatorComponent={Separator}
-        data={homeCareServices}
+        data={services}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => 
             <Content
@@ -120,7 +102,7 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
                     },
                     {
                         text: "Confirmar",
-                        onPress: () => handleDeleteHomeCare(item.id)
+                        onPress: () => deleteService(item.id)
                     }
                 ]
             )}
@@ -134,10 +116,6 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
             </Content>
         }        
         />
-        </ServicesContent>
-        }
-
-    
         </ServicesContent>
         <Footer>        
         <Button 
@@ -154,6 +132,7 @@ export function SelectHomeCare({handleCloseModal, setPrice, selectedHome, setSel
         >
             <AddNewHomeCare
             homeCareServices={homeCareServices}
+
             setHomeCareServices={setHomeCareServices}
             
             closeModal={handleCloseNewHomeCareModal}
