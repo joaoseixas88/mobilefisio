@@ -1,6 +1,4 @@
 
-
-
 export interface HomeCareProps{
     id: string;
     name: string;
@@ -14,7 +12,16 @@ export interface PatientProps{
     age: string;
     diagnosis: string;
     price: string;    
-    dates: Date[];    
-    assistences: string[]
+    dates: Date[];   
+    
 }
 
+export interface actionProps {
+    type: string;
+    payload: userProps;
+}
+
+export interface userProps {
+    name: string
+    email: string
+}

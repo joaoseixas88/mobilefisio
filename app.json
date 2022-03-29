@@ -2,6 +2,7 @@
   "expo": {
    "name": "mobilefisio",
    "icon": "./src/global/assets/icon.png",
+   "userInterfaceStyle": "automatic",
    "version": "1.0.1",
    "slug": "fisioapp",
    "ios": {

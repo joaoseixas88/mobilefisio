@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { Header } from '../../components/Header'
 import { ServiceCard } from '../../components/ServiceCard'
-import { Container, Content } from './styles'
+import { Container, Content, FlatContent } from './styles'
 import { NavigationProps } from '../../routes/types'
 import { PatientsList } from '../../components/PatientsList'
 import { useServices } from '../../hooks/servicesContext'
@@ -22,29 +22,30 @@ export function AllPatients({navigation}: Props){
 
     
     return(
+
+        
     <Container>
-        <Header title="Pacientes"/>
-      
-        <Content>            
+        <Header title="Pacientes"/>      
+        <Content>
             <FlatList             
                 data={formattedServices}
                 keyExtractor={(service) => service.id}            
                 renderItem={({item}) =>
-            <Content>
-            <ServiceCard
-                title={item.name}            
-            />
-            <PatientsList
-                patients={item.patients}
-                serviceId={item.id} 
-                navigation={navigation}  
-                       
-            />
-            </Content> 
-        }
+                    <FlatContent>
+                        <ServiceCard
+                            title={item.name}            
+                        />
+                        <PatientsList
+                            patients={item.patients}
+                            serviceId={item.id} 
+                            navigation={navigation}  
+                                
+                        />
+                    </FlatContent>
+                    
+                 }
 
-            />
-    
+            />    
         </Content>
     </Container>
     )

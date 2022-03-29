@@ -18,6 +18,7 @@ export const PatientContent = styled.View`
    padding: 15px;
    border-radius: 10px;
    flex: 1;
+   margin-bottom: 5px;
 `
 
 
@@ -45,7 +46,9 @@ export const Visits = styled.Text`
 export const ButtonContent = styled.View``
 
 export const Delete = styled(RectButton)`
-    background-color: red;
+    
+    position: absolute;
+    right: 10px;    
     border-radius: 5px;
     padding: 5px;
     justify-content: center;
@@ -59,6 +62,35 @@ export const DeleteText = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
 `
 
-export const DatesContainer = styled.Text``
-export const Title = styled.Text``
-export const Date = styled.Text``
+export const DatesContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+`
+
+export const Title = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.regular};
+    font-size: ${RFValue(19)}px;
+`
+export const DateText = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.regular};
+    font-size: ${RFValue(15)}px;
+`
+
+export const AddVisit = styled(RectButton)`
+    align-items: center;
+    align-self: center;
+    padding: 6px;
+    background-color: ${({ theme }) => theme.colors.sucess_light};
+    border-radius: 5px;
+    margin: 5px;
+    
+    
+`
+export const AddVisitText = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.regular};
+    font-size: ${RFValue(15)}px;
+`
+
+export const DeleteAssistence = styled(RectButton)``

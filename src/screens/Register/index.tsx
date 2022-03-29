@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { SelectHomeCare } from "../SelectHomeCare/index";
 import { InputForm } from "../../components/InputForm";
 import { Input } from "./styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -20,7 +19,6 @@ import {
 import { Header } from "../../components/Header";
 import { RectButtonProps } from "react-native-gesture-handler";
 import { Button } from "../../components/Button";
-import { servicesKey } from "../../../utils/keys";
 import { HomeCareProps } from "../../../utils/types";
 import { useServices } from "../../hooks/servicesContext";
 
@@ -62,6 +60,8 @@ export function Register() {
     price: price,
     patients: [],
   });
+
+  
 
   function handleOpenRegisterHomeCareOpenModal() {
     setRegisterHomeCareOpenModal(true);
@@ -138,7 +138,7 @@ export function Register() {
             </OpenModal>
           </Form>
           <Button title="Salvar" onPress={handleSubmit(handleSaveNewPatient)} />
-          <Button title="delete" onPress={() => limpar()} />
+          {/* <Button title="delete" onPress={() => limpar()} /> */}
           <Modal
             visible={registerHomeCareOpenModal}
             onRequestClose={handleCloseRegisterHomeCareOpenModal}

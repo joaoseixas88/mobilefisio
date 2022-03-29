@@ -1,14 +1,16 @@
 import React from "react";
 import { useTheme } from 'styled-components'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from '../screens/Home';
 import { MaterialIcons } from '@expo/vector-icons'
 import { Register } from "../screens/Register";
 import { Productivity } from "../screens/Productivity";
+import { ProductivityByDate } from "../screens/ProductivityByDate";
 import { createStackNavigator } from "@react-navigation/stack";
 import { PatientScreen } from "../screens/PatientScreen";
 import { RootStackParamList } from "./types";
 import { AllPatients } from "../screens/AllPatients";
+import { ScreenStackHeaderLeftView } from "react-native-screens";
+import { LoginScreen } from "../screens/Login";
 
 
 
@@ -18,23 +20,34 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 
 export function AppRoutes(){
+
     return (
         <Stack.Navigator>
+            {/* <Stack.Group
+                screenOptions={{headerShown:false}}
+            >
+                <Stack.Screen name="Login" component={LoginScreen}/>
+            </Stack.Group> */}
+
             <Stack.Group
-            screenOptions={{headerShown:false}}
+                screenOptions={{headerShown:false}}
             >
                 <Stack.Screen 
                 name="Routes" 
                 component={Routes}            
                 />
             </Stack.Group>
+
             <Stack.Group
-            screenOptions={{headerShown:false}}
+                screenOptions={{headerShown:false}}
             >
                 <Stack.Screen
                 name="Patient"
-                component={PatientScreen}
-                
+                component={PatientScreen}                
+                />
+                <Stack.Screen
+                    name="ProductivityByDate"
+                    component={ProductivityByDate}
                 />
             </Stack.Group>
         </Stack.Navigator>

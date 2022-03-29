@@ -52,9 +52,9 @@ export function PatientCard({navigation, patient, serviceId }: Props){
         </Header>
         <Content>
             <PatientContent>
-                <Visits>Visitas: {patient.assistences.length}</Visits>
+                <Visits>Visitas: {patient.dates.length}</Visits>
                 <DetailsButton
-                    onPress={() => navigation.navigate('Patient', {patient:JSON.stringify(patient), serviceId: serviceId})}
+                    onPress={() => navigation.navigate('Patient', {patientId: patient.id, serviceId: serviceId})}
                     >
                     <Details>Detalhes</Details>
                 </DetailsButton>

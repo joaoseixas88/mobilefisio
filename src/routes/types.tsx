@@ -11,14 +11,15 @@ export interface PatientProps{
   assistences: string[]
 }
 export type RootStackParamList = {
+    Login: undefined;
     Routes: undefined;
-    Patient: {patient: string, serviceId: string;};
-    
+    Patient: {patientId: string, serviceId: string;};
+    ProductivityByDate: undefined
   };
 
 export type NavigationProps = StackNavigationProp<
 RootStackParamList,
-  'Patient'
+  'Patient'  
 >;
 
 

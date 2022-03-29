@@ -4,10 +4,8 @@ import { GestureHandlerRootView, RectButtonProps } from 'react-native-gesture-ha
 import { Header } from '../../components/Header'
 import { SelectHomeButton } from '../../components/SelectHomeButton'
 import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AddNewHomeCare } from '../AddNewHomeCare'
 import { Button } from '../../components/Button'
-import { ActivityIndicator } from 'react-native'
 
 import { 
     Container, 
@@ -19,7 +17,6 @@ import {
 
 } from './styles'
 import { PatientProps } from '../../../utils/types'
-import { servicesKey } from '../../../utils/keys'
 import { useServices } from '../../hooks/servicesContext'
 
 

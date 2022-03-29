@@ -3,8 +3,9 @@ export default {
     colors:{
 
         primary: '#5439ec',
+        blue: '#107dac',
         text_color: '#E24D00',
-        text_rgb: 'rgb(226, 77, 0, 0.3)',
+        text_rgb: 'rgba(226, 77, 0, 0.3)',
         bg: '#353333',
         secondary: '#ff872c',
         secondary_light: 'rgba(255, 135, 44, 0.3)',
@@ -19,7 +20,8 @@ export default {
         title: '#363f5f',
         text: '#969cb2',
         text_dark: '#000000',
-        background: '#f0f2f5'
+        background: '#f0f2f5',
+        background_transparent: 'rgba(0, 0, 0, 0.4)'
         
 
     },

@@ -18,20 +18,31 @@ export interface PatientProps{
     diagnosis: string;
     price: string;    
     dates: Date[];    
-    assistences: string[]
+    
 }
 
 const servicesKey = '@mobilefisio:homeservices'
+const allDatesKey = '@mobilefisio:allDates'
 
+function seviceKey(serviceId: string){
+    return `@mobilefisio:homeservices/${serviceId}`
+}
+
+export function patientKey(serviceId: string, patientId: string){
+    return `@mobilefisio:homeservices/${serviceId}/${patientId}`
+}
 
 interface ServicesContextData {
     services: HomeCareProps[];
     registerNewService: (homeCare: HomeCareProps) => void;
     registerNewPatient: (serviceId: string, newPatient: PatientProps) => void;
-    addNewVisit: (id: string, patientId: string) => void;
+    addNewVisit: (id: string, patientId: string, date?: Date) => void;
     deletePatient: (id: string, patientId: string) => void;
     deleteService: (id: string) => void;
+    deleteAssistence: (serviceId: string, patientId: string, dateIndex: number) => void;
+    allDates: Date[]
     limpar: () => void;
+    
  }
 
  type ServiceProviderProps = {
@@ -42,45 +53,67 @@ const ServicesContext = createContext<ServicesContextData>({} as ServicesContext
 
 
 
+
 export function ServicesProvider({children}: ServiceProviderProps ){
 
+    
+
     const [services, setServices] = useState<HomeCareProps[]>([])
+    const [allDates, setAllDates] = useState<Date[]>([])
+    
 
-
-    async function addNewVisit(serviceId: string, patientId: string){
+    async function addNewVisit(serviceId: string, patientId: string, date?: Date){
 
         
         const currentServices = [...services]
+        const currentDates = [...allDates]
         
-        const date = new Date
-        const dateFormatted = Intl.DateTimeFormat('pt-BR',{
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'       
-            }).format(date)
-        const hourFormatted = Intl.DateTimeFormat('pt-BR',{
-            hour: '2-digit',
-            minute: '2-digit',
-            }).format(date)
+        const newDate = date ? date : new Date()
+        
+        currentDates.push(newDate)
         
             currentServices.findIndex((item) =>{
                 if (item.id === serviceId){
                     item.patients.findIndex((patient) => {
                         if (patient.id === patientId){
-                            patient.dates.push(date)
-                            patient.assistences.push(`Dia ${dateFormatted} às ${hourFormatted} horas`)
+                            patient.dates.push(newDate)                           
                         }
                     })
                 }
             })
         try {
             await AsyncStorage.setItem(servicesKey,JSON.stringify(currentServices))
+
+            await AsyncStorage.setItem(allDatesKey,JSON.stringify(currentDates))
+
             setServices(currentServices)
+            setAllDates(currentDates)
         } catch (error) {
             console.log(error)
             Alert.alert('Algo deu errado')
         }
       
+    }
+
+    
+
+    async function deleteAssistence(serviceId: string, patientId: string, dateIndex: number){
+        const currentServices = [...services]
+
+        const serviceIndex = currentServices.findIndex((item) => item.id === serviceId)
+        const patientIndex = currentServices[serviceIndex].patients.findIndex((item) => item.id === patientId)
+
+        
+        currentServices[serviceIndex].patients[patientIndex].dates.splice(dateIndex, 1)
+
+        try {
+            await AsyncStorage.setItem(servicesKey,JSON.stringify(currentServices))
+            setServices(currentServices)
+
+        } catch (error) {
+            console.log(error)
+            Alert.alert('Algo deu errado')
+        }
     }
 
     async function limpar() {
@@ -107,7 +140,7 @@ export function ServicesProvider({children}: ServiceProviderProps ){
             Alert.alert('Algo deu errado')
             console.log(error)
         }
-        console.log(currentServices[index].patients)
+        
  
      }
 
@@ -129,31 +162,43 @@ export function ServicesProvider({children}: ServiceProviderProps ){
     }
 
     async function loadServices(){
-        const response = await AsyncStorage.getItem(servicesKey)
-        const currentServices: HomeCareProps[] = response ? JSON.parse(response) : []
+
+        try {
+            const response = await AsyncStorage.getItem(servicesKey)
+            const currentServices: HomeCareProps[] = response ? JSON.parse(response) : [] 
+            const datesResponse = await AsyncStorage.getItem(allDatesKey)
+            const currentDates: Date[] = datesResponse ? JSON.parse(datesResponse) : []
+            setServices(currentServices) 
+            setAllDates(currentDates)
+        } catch (error) {
+            
+        }
+         
+
         
-        const isTherePatientsServices = currentServices.filter(service => service.patients.length > 0)
-
-
-        setServices(currentServices)
+    
     }
 
     async function registerNewPatient(serviceId: string, newPatient: PatientProps){
+        
         const currentServices = [...services]
 
-        currentServices[
-            currentServices.findIndex((item) => item.id === serviceId)
-          ].patients.push(newPatient);
+        const index = currentServices.findIndex(service => service.id ===serviceId)
+        currentServices[index].patients.push(newPatient)
+
+        const newServices = [...currentServices]
 
           try {
-              await AsyncStorage.setItem(servicesKey, JSON.stringify(currentServices))
-              setServices(currentServices)
+              await AsyncStorage.setItem(servicesKey, JSON.stringify(newServices))
+              await AsyncStorage.setItem(patientKey(serviceId,newPatient.id),JSON.stringify(newPatient))
+
+              setServices(newServices)
           } catch (error) {
               Alert.alert('Algo deu errado')
               console.log(error)
               
           }
-
+          
     }
 
     async function registerNewService(homeCare: HomeCareProps){
@@ -167,6 +212,8 @@ export function ServicesProvider({children}: ServiceProviderProps ){
         
         try {
             await AsyncStorage.setItem(servicesKey,JSON.stringify(newServices))
+            await AsyncStorage.setItem(seviceKey(homeCare.id),JSON.stringify(currentServices))
+
             setServices(newServices)
         } catch (error) {
             Alert.alert('Algo deu errado.')
@@ -188,7 +235,10 @@ export function ServicesProvider({children}: ServiceProviderProps ){
             registerNewPatient, 
             addNewVisit, 
             deletePatient, 
-            limpar
+            deleteAssistence,
+            allDates,
+            limpar,
+            
         }}
         
         >

@@ -1,6 +1,7 @@
 import { RectButton } from 'react-native-gesture-handler'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled from 'styled-components/native'
+import { Picker } from '@react-native-picker/picker'
 
 export const Container = styled.View`
     flex: 1;
@@ -45,4 +46,13 @@ export const Total = styled.Text`
 export const ProdByDate = styled(RectButton)`
     position: absolute;
     right: 15px;
+`
+export const SelectYear = styled(Picker)`
+    width: 50%;
+    align-self: center;
+`
+export const SelectMonth = styled(Picker)`
+    width: 50%;
+    align-self: center;
+    align-items: center;
 `

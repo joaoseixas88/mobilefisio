@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid'
 import { PatientProps } from '../../../utils/types'
 
@@ -16,8 +15,6 @@ import {
     Content
  } from './styles'
 import { Button } from '../../components/Button';
-import { Alert } from 'react-native';
-import { servicesKey  } from '../../../utils/keys';
 import { useServices } from '../../hooks/servicesContext';
 
 
@@ -48,7 +45,7 @@ interface FormData{
 
 
 
-export function AddNewHomeCare({closeModal, setHomeCareServices, homeCareServices}: Props){
+export function AddNewHomeCare({closeModal }: Props){
 
 
     const { registerNewService } = useServices() 
@@ -98,6 +95,7 @@ export function AddNewHomeCare({closeModal, setHomeCareServices, homeCareService
                         error={errors.price && errors.price.message}
                         name='price'
                         placeholder='Valor'
+                        keyboardType='numeric'
                         />
                     
                     </Form>
