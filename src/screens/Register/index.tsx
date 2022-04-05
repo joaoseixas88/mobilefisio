@@ -138,7 +138,7 @@ export function Register() {
             </OpenModal>
           </Form>
           <Button title="Salvar" onPress={handleSubmit(handleSaveNewPatient)} />
-          {/* <Button title="delete" onPress={() => limpar()} /> */}
+          
           <Modal
             visible={registerHomeCareOpenModal}
             onRequestClose={handleCloseRegisterHomeCareOpenModal}

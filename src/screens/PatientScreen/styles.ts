@@ -14,11 +14,12 @@ export const Content = styled.View`
 `
 
 export const PatientContent = styled.View`
-   background-color:${({ theme }) => theme.colors.sucess_light};
-   padding: 15px;
-   border-radius: 10px;
-   flex: 1;
-   margin-bottom: 5px;
+    position: relative;
+    background-color:${({ theme }) => theme.colors.sucess_light};
+    padding: 15px;
+    border-radius: 10px;
+    flex: 1;
+    margin-bottom: 5px;
 `
 
 
@@ -79,8 +80,11 @@ export const DateText = styled.Text`
 `
 
 export const AddVisit = styled(RectButton)`
+    position: absolute;
+    bottom: 2px;
     align-items: center;
     align-self: center;
+    
     padding: 6px;
     background-color: ${({ theme }) => theme.colors.sucess_light};
     border-radius: 5px;

@@ -1,5 +1,5 @@
 import React from 'react'
-import  Calendarr  from '../../components/Calendar'
+
 
 import { Container, Content, Input, Login,ButtonContent, Button } from './styles'
 
@@ -17,7 +17,7 @@ export function LoginScreen(){
                 </Button>
             </ButtonContent>
         </Content> */}
-        <Calendarr/>
+        
     </Container>
     )
 }

@@ -9,8 +9,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { PatientScreen } from "../screens/PatientScreen";
 import { RootStackParamList } from "./types";
 import { AllPatients } from "../screens/AllPatients";
-import { ScreenStackHeaderLeftView } from "react-native-screens";
-import { LoginScreen } from "../screens/Login";
 
 
 
@@ -22,13 +20,7 @@ const Stack = createStackNavigator<RootStackParamList>()
 export function AppRoutes(){
 
     return (
-        <Stack.Navigator>
-            {/* <Stack.Group
-                screenOptions={{headerShown:false}}
-            >
-                <Stack.Screen name="Login" component={LoginScreen}/>
-            </Stack.Group> */}
-
+        <Stack.Navigator>            
             <Stack.Group
                 screenOptions={{headerShown:false}}
             >
@@ -37,7 +29,6 @@ export function AppRoutes(){
                 component={Routes}            
                 />
             </Stack.Group>
-
             <Stack.Group
                 screenOptions={{headerShown:false}}
             >

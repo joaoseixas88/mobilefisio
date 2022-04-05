@@ -7,6 +7,7 @@ import { Container, Content, Separator, TotalProductivity, TotalProdText, Total,
 import { useServices } from '../../hooks/servicesContext';
 import { NavigationProps } from '../../routes/types'
 import { formatBRL } from '../../../utils/format'
+import { Button } from '../../components/Button'
 
 interface Props { 
     navigation: NavigationProps
@@ -34,7 +35,7 @@ export function Productivity({navigation}: Props){
             >
                 <TotalProdText>Prod</TotalProdText>
             </ProdByDate> */}
-        </Header>
+        </Header>        
         <Content>            
             <FlatList 
                 showsVerticalScrollIndicator={false}
