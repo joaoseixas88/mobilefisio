@@ -32,7 +32,6 @@ export function ProductivityByDate({navigation}: Props){
 
     function filterDate(date: Date, month: number){
         const newDate = new Date(date)
-
         return newDate.getMonth() === month 
     }
 

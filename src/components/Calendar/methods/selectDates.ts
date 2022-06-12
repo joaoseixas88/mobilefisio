@@ -12,16 +12,26 @@ export function selectDates(dates: Date[]){
     return `${year}-${month}-${day}`
   })
   
-  
-  const formattedList = datesFormatted.reduce((acc, item )=> {
-    return {
-      ...acc,
-      [item]: {selected: true}
-    }
-},{})
+  const vacation = {key: 'vacation', color: 'red', selectedDotColor: 'blue'}
+  const formattedList = datesFormatted.reduce((acc, item )=> {  
+    const isDateAlreadyExist = acc.hasOwnProperty(item)
+      if(isDateAlreadyExist){
+        return {
+          ...acc,
+          [item]: { selected: true, selectedColor: '#04770a'} 
+        }
+      }else{
+        return{
+          ...acc,
+          [item]: {selected: true, selectedColor: '#0ebd17'}
+        }
+      }
+      
+
+
+
+  },{})
 
 return formattedList
+
 }
-
-
-

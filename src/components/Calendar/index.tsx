@@ -1,42 +1,23 @@
 import React from 'react'
 import  { Calendar }  from 'react-native-calendars'
 import { StyleSheet } from 'react-native'
-import {LocaleConfig} from 'react-native-calendars';
+import './localeConfig/localeConfig'
 
+interface Props{
+  markedDates: any;
+  onChangeMonth: (year: number, month: number) => void;
+}
 
-
-LocaleConfig.locales['br'] = {
-  monthNames: [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro'
-  ],
-  monthNamesShort: ['Jan.', 'Fev.', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set.', 'Out.', 'Nov.', 'Dez.'],
-  dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-  dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-  today: "Hoje"
-};
-LocaleConfig.defaultLocale = 'br';
-
-
-
-export function CalendarComponent({markedDates}:any){
+export function CalendarComponent({markedDates, onChangeMonth}:Props){
   return(
   
     <Calendar
-      onMonthChange={value => console.log(value)}
-      style={{height: 317, borderRadius: 5}}
+      onMonthChange={value => onChangeMonth(value.year,value.month)}
+      onDayLongPress={value => console.log(value)}
+      style={{ 
+        borderRadius: 5}}        
       markedDates={markedDates}
-      
+      markingType={'multi-dot'}
     />
   
   )

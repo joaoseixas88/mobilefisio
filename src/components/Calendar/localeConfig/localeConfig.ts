@@ -23,3 +23,4 @@ LocaleConfig.locales['br'] = {
   today: "Hoje"
 };
 LocaleConfig.defaultLocale = 'br';
+

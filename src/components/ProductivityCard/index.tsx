@@ -3,6 +3,7 @@ import { FlatList } from 'react-native'
 import { formatBRL } from '../../../utils/format'
 import { HomeCareProps } from '../../../utils/types'
 import { NavigationProps } from '../../routes/types'
+import { filterDates } from '../../screens/PatientScreen/methods/filterDates'
 import { ProductivityPatientCard } from '../ProductivityPatientCard'
 
 import { 
@@ -13,16 +14,21 @@ import {
 
  } from './styles'
 
+
+
  type Props = {
      homeCare: HomeCareProps
      navigation: NavigationProps
-     
+     month: number;
+     year: number;
  }
 
-export function ProductivityCard({homeCare, navigation}: Props){
+export function ProductivityCard({homeCare, navigation, month, year}: Props){
 
     const productivity = homeCare.patients.reduce((acc, patient) => {
-        acc.total = acc.total + (patient.dates.length * Number(patient.price))
+        const filteredDates = filterDates({dates: patient.dates, checkYear: year, checkMonth: month})
+
+        acc.total = acc.total + (filteredDates.length * Number(patient.price))
         return acc
     }, {total: 0})
 
@@ -31,18 +37,24 @@ export function ProductivityCard({homeCare, navigation}: Props){
     <Container>
         <Content>
         <ServiceName>{homeCare.name}</ServiceName>
-            <FlatList
-                data={homeCare.patients}
-                // ItemSeparatorComponent={Separator}
-                keyExtractor={(item) => item.id}
-                renderItem={({item}) =>
+
+            {homeCare.patients.map(patient => {
+                const productivity = filterDates({dates: patient.dates, checkMonth: month, checkYear: year}).length
+                
+                if(productivity === 0) {
+                    return;
+                }
+                return (
                     <ProductivityPatientCard 
-                        patient={item}
+                        key={patient.id}
+                        month={month}
+                        year={year}
+                        patient={patient}
                         navigation={navigation}
                         serviceId={homeCare.id}
                     />
-                }
-            />
+                )
+            })}            
             <Total> {formatBRL(productivity.total)}</Total>
         </Content>
     </Container>

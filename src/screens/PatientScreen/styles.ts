@@ -24,22 +24,22 @@ export const PatientContent = styled.View`
 
 
 export const Age = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     font-family: ${({ theme }) => theme.fonts.regular};
     color: ${({ theme}) => theme.colors.text_dark}; 
 `
 export const Diagnosis = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     font-family: ${({ theme }) => theme.fonts.regular};
     color: ${({ theme}) => theme.colors.text_dark}; 
 `
 export const Price = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     font-family: ${({ theme }) => theme.fonts.regular};
     color: ${({ theme}) => theme.colors.text_dark}; 
 `
 export const Visits = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(16)}px;
     font-family: ${({ theme }) => theme.fonts.regular};
     color: ${({ theme}) => theme.colors.text_dark}; 
 `
@@ -72,7 +72,7 @@ export const DatesContainer = styled.View`
 
 export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
-    font-size: ${RFValue(19)}px;
+    font-size: ${RFValue(16)}px;
 `
 export const DateText = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};

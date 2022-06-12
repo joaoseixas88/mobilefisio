@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, TouchableNativeFeedbackBase, TouchableWithoutFeedback  } from 'react-native'
+import { Modal, TouchableWithoutFeedback  } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Background, Container, Title, Content, Button, ButtonText } from './styles'
 

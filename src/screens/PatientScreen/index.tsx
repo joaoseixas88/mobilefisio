@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Header } from '../../components/Header'
 import { ConfirmationModal } from '../../components/ConfirmationModal';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -12,10 +12,8 @@ import {
     Price,
     Visits,
     ButtonContent,
-    Delete,    
-    DatesContainer,
+    Delete,
     Title,
-    DateText,
     AddVisit,
     AddVisitText,
     
@@ -23,17 +21,19 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Button } from '../../components/Button';
 import { NavigationProps, RoutesProps } from '../../routes/types';
-import { Alert, FlatList, Modal } from 'react-native';
+import { Alert, Modal } from 'react-native';
 import { useServices } from '../../hooks/servicesContext';
-import { formatBRL, formatDate } from '../../../utils/format';
+import { formatBRL} from '../../../utils/format';
 import { DeleteModal } from '../DeleteModal';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { DeleteAssistenceButton } from '../../components/DeleteAssistenceButton';
-import { AssistenceCalendar } from '../../components/AssistencesCalendar';
 import { CalendarComponent } from '../../components/Calendar';
-import { date } from 'yup';
 import { selectDates } from '../../components/Calendar/methods/selectDates';
-import { CommomText } from '../../components/CommonText';
+
+import { getPatient } from './methods/getPatient';
+import { filterDates } from './methods/filterDates';
+
+
+
 
 
 interface Props {
@@ -47,54 +47,33 @@ interface Props {
 
 export function PatientScreen({ route, navigation }: Props){
 
-
+    const today = new Date()
     
     const [openConfirmModal, setOpenConfirmModal] = useState(false)
-   
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const [deleteModal, setDeleteModal] = useState(false)
-    const { patientId, serviceId } = route.params  
+    const [date, setDate] = useState({
+        month: today.getMonth()+1,
+        year: today.getFullYear()
+    })
     
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false)
+    const { patientId, serviceId } = route.params 
     
     const { addNewVisit, services } = useServices()
 
-    const serviceIndex = services.findIndex(service => service.id === serviceId)
-    const patientIndex = services[serviceIndex].patients.findIndex(patient => patient.id === patientId)
 
-    const patient = services[serviceIndex].patients[patientIndex]
+    const patient = getPatient({services, serviceId, patientId})
     
     if (patient === undefined) {
         return(
             <Container/>
         )
-    }
-
-    function filterDates(date: Date){
-        const newDate = new Date(date)
-        return newDate.getMonth() === 2 
-    }
-   
-    const filteredDates = patient.dates.filter(date => filterDates(date))
+    }   
+   const filteredDates = filterDates({dates: patient.dates, checkYear: date.year, checkMonth: date.month})
+    const productivity = () => filteredDates.length * Number(patient.price) 
 
     
-
-    const productivity =  patient.dates.length * Number(patient.price) 
     
-    
-    const dates = patient.dates.map((date,index) => {
-        
-        return {
-            date: String(formatDate(date)), 
-            index: index
-        }      
-        
-    }) 
-
-
-    
-
     function handleDelete(){
         Alert.alert(
             "Remover",
@@ -138,8 +117,14 @@ export function PatientScreen({ route, navigation }: Props){
     function hideDatePicker(){
         setDatePickerVisibility(false)
     }
-    const markedDates = selectDates(patient.dates)
-    
+
+    function onChangeMonth(year:number,month: number){
+        setDate({
+            year,
+            month
+        })
+    }
+    const markedDates = selectDates(patient.dates)    
     
     
     return(
@@ -162,13 +147,13 @@ export function PatientScreen({ route, navigation }: Props){
                 {patient.diagnosis &&<Diagnosis>Diagnóstico: {patient.diagnosis}</Diagnosis>}
                 <Price>Valor do atendimento: {formatBRL(Number(patient.price))}
                 </Price>            
-                <Visits>Atendimentos realizados: {patient.dates.length}</Visits>
-                <Visits>Produtividade: {formatBRL(productivity)}</Visits>
+                <Visits>Atendimentos realizados: {filteredDates.length}</Visits>
+                <Visits>Produtividade: {formatBRL(productivity())}</Visits>
 
                 <Title>Datas dos atendimentos:</Title>
                 <CalendarComponent 
                     markedDates={markedDates}
-                
+                    onChangeMonth={onChangeMonth}
                 />
                 <AddVisit
                     onPress={handleOpenConfirmModal}            
